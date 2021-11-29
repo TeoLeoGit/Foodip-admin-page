@@ -75,7 +75,7 @@
     color: #fff;
     background-color: #12192C;
     border-color: #fff;
-    margin-top: 8px;
+    margin-top: 15px;
     box-shadow: none;
 }
 #add-product-btn:hover {
@@ -102,4 +102,9 @@ canvas {
 
 h5 {
     font-weight: bold;
+}
+
+.pagination {
+    float: right;
+    margin-top: 15px;
 }

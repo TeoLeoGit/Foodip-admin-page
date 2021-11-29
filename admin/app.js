@@ -3,7 +3,8 @@ const express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const mongoose = require('mongoose');
+
+
 
 //Mongodb
 const url = 'mongodb+srv://user:Au897520@cluster0.ct0tc.mongodb.net/Foodip?retryWrites=true&w=majority';

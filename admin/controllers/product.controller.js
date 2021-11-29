@@ -45,13 +45,13 @@ class ProductController {
         await Product.addProduct(product);
         fs.unlink(filePath, function (err) {
             if (err) console.log(err);
-            console.log('File deleted!');
+            // console.log('File deleted!');
         });
         res.redirect('/stocks');
     }
 
     getProductDetail(req, res, next) {
-        console.log(req.query)
+        // console.log(req.query)
         Product.getProductById(req.query)
             .then(product => {
                 res.render('stocks/productDetails', mongooseToObject(product))
@@ -60,7 +60,7 @@ class ProductController {
     }
 
     deleteProduct(req, res, next) {
-        console.log(req.body)
+        // console.log(req.body)
         Product.deleteProductById(req.body)
             .then(function (err) {
                 if(!err) res.json()
@@ -70,7 +70,7 @@ class ProductController {
     }
 
     async updateProduct(req, res, next) {
-        // console.log(req.body)
+        console.log(req.body)
         let update = {}
         if(req.file) {
             const filePath = req.file.path
@@ -87,16 +87,51 @@ class ProductController {
 
         await Product.updateProductById(req.body._id, update)
             .then(product => {
+                console.log(product)
                 if(req.file) {
                     fs.unlink(req.file.path, function (err) {
                         if (err) console.log(err);
-                        console.log('File deleted!');
+                        // console.log('File deleted!');
                     });
                 }
                 res.render('stocks/productDetails', mongooseToObject(product))
             })
             .catch(next);
     }
+
+    async getProducts(req, res, next) {
+        let options = {
+            page: 1,
+            limit: 10,
+        };
+        await Product.loadPerPage(options)
+                .then(result => {
+                    let pages = []
+                    let currentPage = result.page;
+                    let totalPages = result.totalPages;
+                    pages.push({page: currentPage})
+                    for (let i = currentPage + 1; i < currentPage + 5; i++)
+                        if(i <= totalPages)
+                            pages.push({page: i})
+                    if (totalPages - currentPage > 4)
+                        pages.push({page: "..."})
+                    
+                    let hasPrev = true
+                    if (currentPage == 1) hasPrev = false
+                    let hasNext = true
+                    if (currentPage == totalPages) hasNext = false;
+                    console.log(pages)
+                    res.render('stocks/stocks', {
+                        products: result.docs,
+                        page: pages,
+                        hasPrev: hasPrev,
+                        hasNext: hasNext
+                    })
+                })
+                .catch(next);         
+                
+    }
+
 }
 
 module.exports = new ProductController();

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 
 const productSchema = new Schema({
     _id: {
@@ -38,6 +40,8 @@ const productSchema = new Schema({
     },
 });
 
+
+productSchema.plugin(mongoosePaginate);
 const Product = mongoose.model('Product', productSchema);
 module.exports  = {
     async loadAll() {
@@ -114,5 +118,9 @@ module.exports  = {
         return await Product.findOneAndUpdate(id, update, {
             new: true
         });
-    }
+    },
+
+    async loadPerPage(options) {
+        return await Product.paginate({activeFlag: 1}, options)
+    },
 }
