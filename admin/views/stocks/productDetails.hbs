@@ -56,7 +56,7 @@
                   <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
-                            <form action="/stocks/detail" method="POST" enctype="multipart/form-data"> 
+                            <form action="/stocks/detail?_id={{this._id}}" method="POST" enctype="multipart/form-data"> 
                                 <div class="row">
                                   <div class="form-group col-md-6">
                                     <label for="productImg">New image</label>
@@ -90,7 +90,7 @@
                                     <label for="productStatus">Status</label>
                                     <!-- <input type="text" class="form-control" id="productStatus" placeholder="Password"> -->
                                     <select class="form-control" id="productStatus" name="status">
-                                      <option>Available</option>
+                                      <option selected>Available</option>
                                       <option>Out of stocks</option>
                                     </select>
                                 </div>

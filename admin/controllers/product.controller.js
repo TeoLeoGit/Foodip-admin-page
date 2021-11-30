@@ -84,10 +84,10 @@ class ProductController {
         if(req.body.category) update["category"] = req.body.category
         if(req.body.discount) update["discount"] = parseFloat(req.body.discount)
         if(req.body.status)
-            if(req.body.status === 'Available') update["status"] = 1
+            if(req.body.status[1] === 'Available') update["status"] = 1
             else update["status"] = 0
 
-        await Product.updateProductById(req.body._id, update)
+        await Product.updateProductById({_id: req.body._id}, update)
             .then(product => {
                 console.log(product)
                 if(req.file) {

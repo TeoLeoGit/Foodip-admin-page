@@ -120,6 +120,7 @@ module.exports  = {
     },
 
     async updateProductById(id, update) {
+        console.log(id)
         return await Product.findOneAndUpdate(id, update, {
             new: true
         });
