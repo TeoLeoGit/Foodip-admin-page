@@ -26,7 +26,8 @@ const productSchema = new Schema({
     },
     description: {
         type: String,
-        required: true
+        required: true,
+        auto: 'No description'
     },
     cover: {
         type: String,

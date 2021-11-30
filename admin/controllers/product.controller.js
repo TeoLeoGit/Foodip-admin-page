@@ -39,6 +39,7 @@ class ProductController {
             category: req.body.category,
             price: parseFloat(req.body.price),
             discount: parseFloat(req.body.discount),
+            description: 'No description',
             cover: imgUrl,
             status: 1,
             activeFlag: 1
