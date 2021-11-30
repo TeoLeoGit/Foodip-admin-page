@@ -6,21 +6,21 @@
 
 .btn-info {
   color: #fff;
-  background-color: #12192C;
+  background-color: #0d6efd;
   border-color: #fff;
 }
 
 
 .btn-info:hover {
   color: #fff;
-  background-color: #12192C;
+  background-color: #0d6efd;
   border-color: #fff;
   opacity: 0.6;
 }
 
 .btn-info:focus {
   color: #fff;
-  background-color: #12192C;
+  background-color: #0d6efd;
   border-color: #fff;
   box-shadow: none;
 }
@@ -39,7 +39,7 @@
   min-width: 250px;
   max-width: 250px;
   min-height: 100vh;
-  background: #12192C;
+  background: #0d6efd;
   color: #fff;
   transition: all 0.3s;
 }
@@ -84,12 +84,12 @@ a, a:hover, a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #12192C;
+    background: #0d6efd;
 }
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #12192C;
+    border-bottom: 1px solid #0d6efd;
 }
 
 #sidebar ul p {
@@ -103,25 +103,25 @@ a, a:hover, a:focus {
     display: block;
 }
 #sidebar ul li a:hover {
-    color: #7386D5;
+    color: #3b78e7;
     background: #fff;
 }
 
 #sidebar > .active > .dropdown-toggle:hover {
-  color: #7386D5;
+  color: #3b78e7;
   background: #fff;
 }
 
 #sidebar ul.components {
   padding: 20px 0;
-  border-top: 1px solid #7386D5;
-  border-bottom: 1px solid #7386D5;
+  border-top: 1px solid #3b78e7;
+  border-bottom: 1px solid #3b78e7;
 }
 
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #12192C;
+    background: #0d6efd;
 }
 
 ul.CTAs {
@@ -138,12 +138,12 @@ ul.CTAs a {
 
 a.sign-out {
   background: #fff;
-  color: #7386D5;
+  color: #3b78e7;
 }
 
 a.profile,
 a.profile:hover {
-  background: #6d7fcc !important;
+  background: #3b78e7 !important;
   color: #fff !important;
 }
 /* ---------------------------------------------------
@@ -180,12 +180,12 @@ a.profile:hover {
 
 .navbar .admin-profile .nav-link {
   padding: 4.5px 27px;
-  color: #12192C;
+  color: #0d6efd;
 }
 
 .navbar .admin-profile .nav-link:hover {
 
-  color: #7386D5;
+  color: #3b78e7;
 }
 
 .navbar .admin-profile .dropdown-menu {

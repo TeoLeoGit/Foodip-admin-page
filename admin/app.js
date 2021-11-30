@@ -3,27 +3,21 @@ const express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+require('dotenv').config()
 
 
 //Mongodb
-const url = 'mongodb+srv://user:Au897520@cluster0.ct0tc.mongodb.net/Foodip?retryWrites=true&w=majority';
 
 //Google APIs
 
 const db = require('./database');
 //env (change to env later)
-const CLIENT_ID = '133885287258-rhrh50r42v8e22oluso9pod1r2jn4ilt.apps.googleusercontent.com'
-const CLIENT_SECRET = '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'
-const REDIRECT_URI = 'https://developers.google.com/oauthplayground'
 
-const REFRESH_TOKEN = '1//04RDJyusBTDBBCgYIARAAGAQSNwF-L9Irp4R3rBwLc2TEJun5bGpe8mbKFJ9Hd7-bHSw47NmZGHkFZ8TzJsDCreM_D53xVhXIeZo'
-
-const driveAPI = require('./apis')
-const filePath = path.join(__dirname, '/public/images')
+// const driveAPI = require('./apis')
+// const filePath = path.join(__dirname, '/public/images')
 
 //Connect to mongo
-db.connectMongoDB(url);
+db.connectMongoDB(process.env.DB_HOST);
 
 
 var indexRouter = require('./routes/index');

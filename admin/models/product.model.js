@@ -24,6 +24,10 @@ const productSchema = new Schema({
         type: Number,
         auto: 0
     },
+    description: {
+        type: String,
+        required: true
+    },
     cover: {
         type: String,
         required: true,
@@ -120,7 +124,7 @@ module.exports  = {
         });
     },
 
-    async loadPerPage(options) {
-        return await Product.paginate({activeFlag: 1}, options)
+    async loadPerPage(filter, options) {
+        return await Product.paginate(filter, options)
     },
 }

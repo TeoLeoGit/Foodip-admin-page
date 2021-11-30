@@ -2,7 +2,8 @@ const Product = require('../models/product.model');
 const driveAPI = require('../apis');
 const mongoose = require('mongoose');
 const fs = require('fs');
-const { multipleMongooseToObject, mongooseToObject} = require('../utils/mongooseUtil')
+const { multipleMongooseToObject, mongooseToObject} = require('../utils/mongooseUtil');
+const { firebasedatabase } = require('googleapis/build/src/apis/firebasedatabase');
 
 const CLIENT_ID = '133885287258-rhrh50r42v8e22oluso9pod1r2jn4ilt.apps.googleusercontent.com'
 const CLIENT_SECRET = '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'
@@ -104,7 +105,10 @@ class ProductController {
             page: 1,
             limit: 10,
         };
-        await Product.loadPerPage(options)
+
+        let filter = { activeFlag: 1}
+        if(req.params.page) options['page'] = parseInt(req.params.page)
+        await Product.loadPerPage(filter, options)
                 .then(result => {
                     let pages = []
                     let currentPage = result.page;
@@ -113,23 +117,74 @@ class ProductController {
                     for (let i = currentPage + 1; i < currentPage + 5; i++)
                         if(i <= totalPages)
                             pages.push({page: i})
-                    if (totalPages - currentPage > 4)
-                        pages.push({page: "..."})
                     
+                    console.log(pages)
                     let hasPrev = true
                     if (currentPage == 1) hasPrev = false
                     let hasNext = true
-                    if (currentPage == totalPages) hasNext = false;
-                    console.log(pages)
+                    if( pages[pages.length - 1].page == totalPages) hasNext = false;
+
+                    let prevAndNextInPages = { prev: currentPage - 1, next: pages[pages.length - 1].page + 1}
+                    let prevAndNext = { prev: currentPage - 1, next: currentPage + 1}
+                                       
                     res.render('stocks/stocks', {
                         products: result.docs,
                         page: pages,
                         hasPrev: hasPrev,
-                        hasNext: hasNext
+                        hasNext: hasNext,
+                        prevAndNext: prevAndNext,
+                        prevAndNextInPages: prevAndNextInPages
                     })
                 })
                 .catch(next);         
                 
+    }
+
+    async getProductsByName(req, res, next) {
+        console.log(req.query.name)
+        let options = {
+            page: 1,
+            limit: 10,
+        };
+
+        let filter = { activeFlag: 1}
+        if (req.query.name)
+            filter['name'] = { $regex: '.*' + req.query.name + '.*'}
+        
+        console.log(filter)
+
+        if(req.params.page) options['page'] = parseInt(req.params.page)
+        await Product.loadPerPage(filter, options)
+                .then(result => {
+                    let pages = []
+                    let currentPage = result.page;
+                    let totalPages = result.totalPages;
+                    pages.push({page: currentPage})
+                    for (let i = currentPage + 1; i < currentPage + 5; i++)
+                        if(i <= totalPages)
+                            pages.push({page: i})
+                    
+                    console.log(pages)
+                    let hasPrev = true
+                    if (currentPage == 1) hasPrev = false
+                    let hasNext = true
+                    if( pages[pages.length - 1].page == totalPages) hasNext = false;
+
+                    let prevAndNextInPages = { prev: currentPage - 1, next: pages[pages.length - 1].page + 1}
+                    let prevAndNext = { prev: currentPage - 1, next: currentPage + 1}
+                    let subRoute = '/search'
+                                       
+                    res.render('stocks/stocks', {
+                        products: result.docs,
+                        page: pages,
+                        hasPrev: hasPrev,
+                        hasNext: hasNext,
+                        prevAndNext: prevAndNext,
+                        prevAndNextInPages: prevAndNextInPages,
+                        subRoute: subRoute
+                    })
+                })
+                .catch(next);  
     }
 
 }

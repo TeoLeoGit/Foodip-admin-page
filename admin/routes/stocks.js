@@ -14,8 +14,10 @@ router.get('/detail', controller.getProductDetail);
 router.post('/add', upload.single('img'), controller.addProduct);
 router.post('/detail',  upload.single('img'), controller.updateProduct);
 router.post('/delete', controller.deleteProduct);
+router.get('/search/:page', controller.getProductsByName);
+router.get('/search', controller.getProductsByName);
 router.get('/:page', controller.getProducts);
-router.get('/', controller.index);
+router.get('/', controller.getProducts);
 
 
 

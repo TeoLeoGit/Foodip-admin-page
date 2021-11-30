@@ -11,7 +11,7 @@
 .btn-upload {
     display: block;
     color: #fff;
-    background-color: #12192C;
+    background-color: #0d6efd;
     border-color: #fff;
     box-shadow: none;
     margin-left:auto;
@@ -40,12 +40,12 @@
 }
 .btn-submit {
     margin-top: 16px;
-    background: #12192C;
+    background: #0d6efd;
     border: none;
 }
 
 .btn-submit:hover {
-    background: #12192C;
+    background: #0d6efd;
     opacity: 0.8;
 }
 
@@ -73,14 +73,14 @@
 ----------------------------------------------------- */
 #add-product-btn {
     color: #fff;
-    background-color: #12192C;
+    background-color: #0d6efd;
     border-color: #fff;
     margin-top: 15px;
     box-shadow: none;
 }
 #add-product-btn:hover {
     color: #ccc;
-    background-color: #12192C ;
+    background-color: #0d6efd ;
     opacity: 0.8;
 }
 
