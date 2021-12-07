@@ -2,6 +2,9 @@
   "name": "admin",
   "version": "0.0.0",
   "private": true,
+  "engines" :{
+      "node": "v14.16.1"
+  },
   "scripts": {
     "start": "node ./bin/www"
   },
