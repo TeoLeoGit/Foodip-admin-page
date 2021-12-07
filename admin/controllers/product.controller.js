@@ -16,74 +16,90 @@ class ProductController {
 
     async addProduct(req, res, next) {
         // console.log(req.file)
-        const filePath = req.file.path
-        let imgUrl = await driveAPI.uploadFile(filePath, req.file.originalname)
-        let product = {
-            _id: mongoose.Types.ObjectId(),
-            name: req.body.name,
-            category: req.body.category,
-            price: parseFloat(req.body.price),
-            discount: parseFloat(req.body.discount),
-            description: 'No description',
-            cover: imgUrl,
-            status: 1,
-            activeFlag: 1
+        if(req.isAuthenticated()) {
+            const filePath = req.file.path
+            let imgUrl = await driveAPI.uploadFile(filePath, req.file.originalname)
+            let product = {
+                _id: mongoose.Types.ObjectId(),
+                name: req.body.name,
+                category: req.body.category,
+                price: parseFloat(req.body.price),
+                discount: parseFloat(req.body.discount),
+                description: 'No description',
+                cover: imgUrl,
+                status: 1,
+                activeFlag: 1
+            }
+            await Product.addProduct(product);
+            fs.unlink(filePath, function (err) {
+                if (err) console.log(err);
+                // console.log('File deleted!');
+            });
+            res.redirect('/stocks');
         }
-        await Product.addProduct(product);
-        fs.unlink(filePath, function (err) {
-            if (err) console.log(err);
-            // console.log('File deleted!');
-        });
-        res.redirect('/stocks');
+        else   
+            res.redirect('/login')
     }
 
     getProductDetail(req, res, next) {
         // console.log(req.query)
-        Product.getProductById(req.query)
-            .then(product => {
-                res.render('stocks/productDetails', mongooseToObject(product))
-            })
-            .catch(next);
+        if(req.isAuthenticated()) {
+            Product.getProductById(req.query)
+                .then(product => {
+                    res.render('stocks/productDetails', mongooseToObject(product))
+                })
+                .catch(next);
+        }
+        else   
+            res.redirect('/login')
     }
 
     deleteProduct(req, res, next) {
         // console.log(req.body)
-        Product.deleteProductById(req.body)
-            .then(function (err) {
-                if(!err) res.json()
-                res.redirect('/stocks');
-            })
-            .catch(next);
+        if(req.isAuthenticated()) {
+            Product.deleteProductById(req.body)
+                .then(function (err) {
+                    if(!err) res.json()
+                    res.redirect('/stocks');
+                })
+                .catch(next);
+        }
+        else   
+            res.redirect('/login')
     }
 
     async updateProduct(req, res, next) {
-        console.log(req.body)
-        let update = {}
-        if(req.file) {
-            const filePath = req.file.path
-            let imgUrl = await driveAPI.uploadFile(filePath, req.file.originalname)
-            update["cover"] = imgUrl
+        if(req.isAuthenticated()) {
+            console.log(req.body)
+            let update = {}
+            if(req.file) {
+                const filePath = req.file.path
+                let imgUrl = await driveAPI.uploadFile(filePath, req.file.originalname)
+                update["cover"] = imgUrl
+            }
+            if(req.body.name) update["name"] = req.body.name
+            if(req.body.price) update["price"] = parseFloat(req.body.price)
+            if(req.body.category) update["category"] = req.body.category
+            if(req.body.discount) update["discount"] = parseFloat(req.body.discount)
+            if(req.body.status)
+                if(req.body.status[1] === 'Available') update["status"] = 1
+                else update["status"] = 0
+    
+            await Product.updateProductById({_id: req.body._id}, update)
+                .then(product => {
+                    console.log(product)
+                    if(req.file) {
+                        fs.unlink(req.file.path, function (err) {
+                            if (err) console.log(err);
+                            // console.log('File deleted!');
+                        });
+                    }
+                    res.render('stocks/productDetails', mongooseToObject(product))
+                })
+                .catch(next);
         }
-        if(req.body.name) update["name"] = req.body.name
-        if(req.body.price) update["price"] = parseFloat(req.body.price)
-        if(req.body.category) update["category"] = req.body.category
-        if(req.body.discount) update["discount"] = parseFloat(req.body.discount)
-        if(req.body.status)
-            if(req.body.status[1] === 'Available') update["status"] = 1
-            else update["status"] = 0
-
-        await Product.updateProductById({_id: req.body._id}, update)
-            .then(product => {
-                console.log(product)
-                if(req.file) {
-                    fs.unlink(req.file.path, function (err) {
-                        if (err) console.log(err);
-                        // console.log('File deleted!');
-                    });
-                }
-                res.render('stocks/productDetails', mongooseToObject(product))
-            })
-            .catch(next);
+        else   
+            res.redirect('/login')
     }
 
     async getProducts(req, res, next) {
@@ -130,20 +146,18 @@ class ProductController {
     }
 
     async getProductsByName(req, res, next) {
-        console.log(req.query.name)
-        let options = {
-            page: 1,
-            limit: 10,
-        };
-
-        let filter = { activeFlag: 1}
-        if (req.query.name)
-            filter['name'] = { $regex: '.*' + req.query.name + '.*'}
-        
-        console.log(filter)
-
-        if(req.params.page) options['page'] = parseInt(req.params.page)
-        await Product.loadPerPage(filter, options)
+        if(req.isAuthenticated()) {
+            // console.log(req.query.name)
+            let options = {
+                page: 1,
+                limit: 10,
+            };
+            let filter = { activeFlag: 1}
+            if (req.query.name)
+                filter['name'] = { $regex: '.*' + req.query.name + '.*'}
+            console.log(filter)
+            if(req.params.page) options['page'] = parseInt(req.params.page)
+            await Product.loadPerPage(filter, options)
                 .then(result => {
                     let pages = []
                     let currentPage = result.page;
@@ -162,7 +176,7 @@ class ProductController {
                     let prevAndNextInPages = { prev: currentPage - 1, next: pages[pages.length - 1].page + 1}
                     let prevAndNext = { prev: currentPage - 1, next: currentPage + 1}
                     let subRoute = '/search'
-                                       
+                                        
                     res.render('stocks/stocks', {
                         products: result.docs,
                         page: pages,
@@ -174,6 +188,9 @@ class ProductController {
                     })
                 })
                 .catch(next);  
+        }
+        else   
+            res.redirect('/login')
     }
 
 }

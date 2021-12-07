@@ -36,6 +36,10 @@ const adminSchema = new Schema({
 
 const Admin = mongoose.model('Admin', adminSchema);
 module.exports = {
+    async loadAll() {
+        return await Admin.find({activeFlag: 1})
+    },
+
     async getAdmin(filter) {
         return await Admin.findOne(filter).exec();
     },
@@ -44,17 +48,10 @@ module.exports = {
         return await Admin.findOne({_id: id}).exec();
     },
 
-    async insertExample() {
-        let arr = [
-            {
-                _id: mongoose.Types.ObjectId,
-                firstname: 'Truong Van',
-                lastname: 'An',
-                username: 'admin123',
-                password: '123456'
-            }
-        ];
-        Admin.collection.insertMany(arr);
-    },
+
+    async createAdmin(requiredInfos) {
+        return await Admin.create(requiredInfos)
+    }
+
 
 }

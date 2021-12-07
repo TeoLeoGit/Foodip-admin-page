@@ -1,32 +1,32 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
-
+const bcrypt = require('bcrypt');
 const Admin = require('../models/admin.model')
 
 passport.use(new localStrategy({
     usernameField: 'username',
     passwordField: 'password',
 },
-    function (username, password, done) {
-        console.log(username, password)
-        Admin.getAdmin({ username: username})
-            .then(admin => {
-                //if (err) { return done(err); }
-                if (!admin) {
-                    return done(null, false, { message: 'Incorrect username.' });
-                }
-                if (!validPassword(admin, password)) {
-                    return done(null, false, { message: 'Incorrect password.' });
-                }
-                console.log(admin)
-                return done(null, admin);
-            })
-            .catch(err => { return done(err); });
+    async function (username, password, done) {
+        // console.log(username, password)
+        try {
+            let admin = await Admin.getAdmin({ username: username})
+            // console.log(admin)
+            if (!admin) {
+                return done(null, false, { message: 'Incorrect username.' });
+            }
+            let match = await validPassword(admin, password)
+            if (!match) {
+                return done(null, false, { message: 'Incorrect password.' });
+            }
+            return done(null, admin);
+        }
+            catch(err) { return done(err); }
     }
 ))
 
-validPassword = function( admin, pwd ) {
-    return ( admin.password === pwd );
+async function validPassword( admin, pwd ) {
+    return bcrypt.compare(pwd, admin.password);
 }
 
 passport.serializeUser(function(user, done) {

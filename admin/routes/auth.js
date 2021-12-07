@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('../auth/passport');
 const router = express.Router();
+const authController = require('../controllers/auth.controller')
 
 router.get('/login', function (req, res, next) {
     //assign req.flash to a variable or it will be undefined after first use
@@ -24,6 +25,8 @@ router.post('/login',
             res.redirect('/login');
     }
 )
+
+router.post('/register', authController.register);
 
 router.get('/logout', function(req, res){
     req.logout();

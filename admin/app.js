@@ -16,7 +16,7 @@ db.connectMongoDB(process.env.DB_HOST);
 
 var indexRouter = require('./routes/index');
 // const routes = require('./routes/index')(passport);
-const authRouter = require('./routes/auth')
+const authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
 var analyticsRouter = require('./routes/analytics');
 var ordersRouter = require('./routes/orders');
@@ -24,6 +24,7 @@ var userAccountsRouter = require('./routes/userAccounts');
 var stocksRouter = require('./routes/stocks');
 var receivedOrdersRouter = require('./routes/receivedOrders');
 var adminProfileRouter = require('./routes/adminProfile');
+const adminsRouter = require('./routes/admins');
 
 const app = express();
 
@@ -57,6 +58,7 @@ app.use('/stocks', stocksRouter);
 app.use('/receivedOrders', receivedOrdersRouter);
 app.use('/adminProfile', adminProfileRouter);
 app.use('/userAccountId', userAccountsRouter);
+app.use('/admins', adminsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

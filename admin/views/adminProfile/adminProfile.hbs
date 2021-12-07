@@ -12,37 +12,48 @@
                             <li class="list-group-item">
                                 <div class="row">
                                     <div  id="admin-name" class="col">Full name</div>
-                                    <div  class="col" style="text-align: right;">
-                                        John Cina
+                                    <div  class="col" style="text-align: left;">
+                                        {{user.firstname}} {{user.lastname}}
                                     </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
                                     <div  id="admin-email" class="col">Email</div>
-                                    <div  class="col" style="text-align: right;">
-                                        johncina@gmail.com
+                                    <div  class="col" style="text-align: left;">
+                                      {{#if user.email}}
+                                        {{user.email}}
+                                      {{else}}
+                                        not registerd
+                                      {{/if}}
                                     </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
                                     <div  id="admin-phone" class="col">Phone</div>
-                                    <div  class="col" style="text-align: right;">
-                                        0923423523
+                                    <div  class="col" style="text-align: left;">
+                                      {{#if user.phone}}
+                                        {{user.phone}}
+                                      {{else}}
+                                        not registerd
+                                      {{/if}}
                                     </div>
                                 </div>
                             </li>
+
                             <li class="list-group-item">
                                 <div class="row">
                                     <div  id="admin-address" class="col">Address</div>
-                                    <div  class="col" style="text-align: right;">
-                                        22 Tran Phu, District 8, HCM City
+                                    <div  class="col" style="text-align: left;">
+                                      {{#if user.address}}
+                                        {{user.address}}
+                                      {{else}}
+                                        not registerd
+                                      {{/if}}
                                     </div>
                                 </div>
-                            </li>
-                          
-                            
+                            </li>                       
                         </ul>
                       </div>
                   </div>
