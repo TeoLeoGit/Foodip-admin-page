@@ -32,7 +32,7 @@ module.exports = {
             return await this.generatePublicUrl(drive, res.data.id)
           } catch (error) {
             console.log("1: ")
-            console.log(error.message)
+            console.log(error)
           }
     },
 
