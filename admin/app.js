@@ -4,23 +4,19 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config()
+const passport = require('./auth/passport');
+const session = require('express-session');
 
-
-//Mongodb
-
-//Google APIs
+const flash = require('express-flash');
 
 const db = require('./database');
-//env (change to env later)
-
-// const driveAPI = require('./apis')
-// const filePath = path.join(__dirname, '/public/images')
-
 //Connect to mongo
 db.connectMongoDB(process.env.DB_HOST);
 
 
 var indexRouter = require('./routes/index');
+// const routes = require('./routes/index')(passport);
+const authRouter = require('./routes/auth')
 var usersRouter = require('./routes/users');
 var analyticsRouter = require('./routes/analytics');
 var ordersRouter = require('./routes/orders');
@@ -37,11 +33,22 @@ app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: false }));
+app.use(session({secret: "mySecret"}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session())
+
+app.use(function(req, res, next) {
+  res.locals.user = req.user;
+  next();
+})
+app.use(flash());
 
 app.use('/', indexRouter);
+app.use('/', authRouter);
 app.use('/users', usersRouter);
 app.use('/analytics', analyticsRouter);
 app.use('/orders', ordersRouter);

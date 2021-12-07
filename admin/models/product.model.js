@@ -53,57 +53,6 @@ module.exports  = {
         return await Product.find({activeFlag: 1})
     },
 
-    async insertSampleData() {
-        let data = [
-            {
-                _id: mongoose.Types.ObjectId,
-                name: 'Spiderman Pizza',
-                category: 'Fast food',
-                price: '25',
-                cover: '../public/images/pic-1.png',
-                status: 1,
-                activeFlag: 1
-            },
-            {
-                _id: mongoose.Types.ObjectId,
-                name: 'Big Mac',
-                category: 'Fast food',
-                price: '15',
-                cover: '../public/images/pic-1.png',
-                status: 1,
-                activeFlag: 1
-            },
-            {
-                _id: mongoose.Types.ObjectId,
-                name: 'Coca cola',
-                category: 'Drink',
-                price: '2',
-                cover: '../public/images/pic-1.png',
-                status: 1,
-                activeFlag: 1
-            },
-            {
-                _id: mongoose.Types.ObjectId,
-                name: 'Orange juice',
-                category: 'Drink',
-                price: '2',
-                cover: '../public/images/pic-1.png',
-                status: 1,
-                activeFlag: 1
-            },
-            {
-                _id: mongoose.Types.ObjectId,
-                name: 'Steak',
-                category: 'Main disk',
-                price: '35',
-                cover: '../public/images/pic-1.png',
-                status: 1,
-                activeFlag: 1
-            }
-        ];
-        Product.collection.insertMany(data);
-    },
-
     async addProduct(product) {
         return Product.create(product);
     },

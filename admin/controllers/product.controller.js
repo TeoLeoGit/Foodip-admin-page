@@ -3,14 +3,7 @@ const driveAPI = require('../apis');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const { multipleMongooseToObject, mongooseToObject} = require('../utils/mongooseUtil');
-const { firebasedatabase } = require('googleapis/build/src/apis/firebasedatabase');
-
-const CLIENT_ID = '133885287258-rhrh50r42v8e22oluso9pod1r2jn4ilt.apps.googleusercontent.com'
-const CLIENT_SECRET = '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'
-const REDIRECT_URI = 'https://developers.google.com/oauthplayground'
-
-const REFRESH_TOKEN = '1//04RDJyusBTDBBCgYIARAAGAQSNwF-L9Irp4R3rBwLc2TEJun5bGpe8mbKFJ9Hd7-bHSw47NmZGHkFZ8TzJsDCreM_D53xVhXIeZo'
-
+// const { firebasedatabase } = require('googleapis/build/src/apis/firebasedatabase');
 
 class ProductController {
     index(req, res, next) {
@@ -21,18 +14,10 @@ class ProductController {
             .catch(next);
     }
 
-    insertSample(req, res, next) {
-        Product.insertSampleData()
-            .then(function (err) {
-                if(!err) res.json()
-            })
-            .catch(next);
-    }
-
     async addProduct(req, res, next) {
         // console.log(req.file)
         const filePath = req.file.path
-        let imgUrl = await driveAPI.uploadFile(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN, filePath, req.file.originalname)
+        let imgUrl = await driveAPI.uploadFile(filePath, req.file.originalname)
         let product = {
             _id: mongoose.Types.ObjectId(),
             name: req.body.name,
@@ -76,7 +61,7 @@ class ProductController {
         let update = {}
         if(req.file) {
             const filePath = req.file.path
-            let imgUrl = await driveAPI.uploadFile(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN, filePath, req.file.originalname)
+            let imgUrl = await driveAPI.uploadFile(filePath, req.file.originalname)
             update["cover"] = imgUrl
         }
         if(req.body.name) update["name"] = req.body.name
@@ -102,14 +87,15 @@ class ProductController {
     }
 
     async getProducts(req, res, next) {
-        let options = {
-            page: 1,
-            limit: 10,
-        };
+        if(req.isAuthenticated()) {
+            let options = {
+                page: 1,
+                limit: 10,
+            };
 
-        let filter = { activeFlag: 1}
-        if(req.params.page) options['page'] = parseInt(req.params.page)
-        await Product.loadPerPage(filter, options)
+            let filter = { activeFlag: 1}
+            if(req.params.page) options['page'] = parseInt(req.params.page)
+            await Product.loadPerPage(filter, options)
                 .then(result => {
                     let pages = []
                     let currentPage = result.page;
@@ -137,8 +123,10 @@ class ProductController {
                         prevAndNextInPages: prevAndNextInPages
                     })
                 })
-                .catch(next);         
-                
+                .catch(next);     
+            }
+            else   
+                res.redirect('/login')
     }
 
     async getProductsByName(req, res, next) {
