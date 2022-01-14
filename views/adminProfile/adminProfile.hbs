@@ -6,7 +6,7 @@
                     <div class="card" >
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item avatar-container">
-                                <img src="./images/avatar.jpg" alt="Name" class="admin-img">
+                                <img src="{{user.avataUrl}}" alt="Name" class="admin-img">
                                 <button type="button" class="btn btn-upload">Upload new image</button>
                             </li>
                             <li class="list-group-item">
@@ -61,33 +61,35 @@
                   <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
-                            <form>
+                            <form action="/adminProfile/update" method="POST" enctype="multipart/form-data">
                                 <div class="row">
-    
-                                  <!-- <label class="form-group col-md-2"for="input-first-name">First name</label> -->
+                                  <div class="form-group col-md-6">
+                                    <label for="productImg">New image</label>
+                                    <input type="file" class="form-control" id="adminImg" name="img" accept="image/*" >
+                                  </div>
                                   <div class="form-group col-md-6">
                                     <label for="input-first-name">First name</label>
-                                    <input type="text" class="form-control" id="input-first-name" style="display: inline-block;" placeholder="Fisrt name">
+                                    <input type="text" class="form-control" id="input-first-name" name="firstname" style="display: inline-block;" placeholder="Fisrt name">
                                   </div>
                                   <div class="form-group col-md-6">
                                     <label for="input-last-name">Last name</label>
-                                    <input type="text" class="form-control" id="input-last-name" placeholder="Last name">
+                                    <input type="text" class="form-control" id="input-last-name"  name="lastname" placeholder="Last name">
                                   </div>
                                   <div class="form-group col-md-6">
                                     <label for="inputEmail4">Email</label>
-                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                    <input type="email" class="form-control" id="inputEmail4" name="email" placeholder="Email">
                                   </div>
                                   <div class="form-group col-md-6">
                                     <label for="input-phone">Phone</label>
-                                    <input type="text" class="form-control" id="input-phone" placeholder="Phone">
+                                    <input type="text" class="form-control" id="input-phone" name="phone" placeholder="Phone">
                                   </div>
                                   <div class="form-group col-md-6">
                                     <label for="input-address">Address</label>
-                                    <input type="text" class="form-control" id="input-address" placeholder="Address">
+                                    <input type="text" class="form-control" id="input-address" name="address" placeholder="Address">
                                   </div>
                                   <div class="form-group col-md-6">
                                     <label for="inputPassword4">Password</label>
-                                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                                    <input type="password" class="form-control" id="inputPassword4" name="password" placeholder="Password">
                                   </div>
                                   <div class="form-group col-md-6">
                                     <label for="input-confirm-password">Confirm password</label>

@@ -70,7 +70,7 @@ class ProductController {
 
     async updateProduct(req, res, next) {
         if(req.isAuthenticated()) {
-            console.log(req.body)
+            //console.log(req.body)
             let update = {}
             if(req.file) {
                 const filePath = req.file.path
@@ -87,7 +87,7 @@ class ProductController {
     
             await Product.updateProductById({_id: req.body._id}, update)
                 .then(product => {
-                    console.log(product)
+                    //console.log(product)
                     if(req.file) {
                         fs.unlink(req.file.path, function (err) {
                             if (err) console.log(err);
@@ -121,7 +121,7 @@ class ProductController {
                         if(i <= totalPages)
                             pages.push({page: i})
                     
-                    console.log(pages)
+                    //console.log(pages)
                     let hasPrev = true
                     if (currentPage == 1) hasPrev = false
                     let hasNext = true
@@ -155,7 +155,7 @@ class ProductController {
             let filter = { activeFlag: 1}
             if (req.query.name)
                 filter['name'] = { $regex: '.*' + req.query.name + '.*'}
-            console.log(filter)
+            //console.log(filter)
             if(req.params.page) options['page'] = parseInt(req.params.page)
             await Product.loadPerPage(filter, options)
                 .then(result => {
@@ -167,7 +167,7 @@ class ProductController {
                         if(i <= totalPages)
                             pages.push({page: i})
                     
-                    console.log(pages)
+                    //console.log(pages)
                     let hasPrev = true
                     if (currentPage == 1) hasPrev = false
                     let hasNext = true

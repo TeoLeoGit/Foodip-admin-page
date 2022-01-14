@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
 
 const adminSchema = new Schema({
     _id: {
@@ -51,7 +52,17 @@ module.exports = {
 
     async createAdmin(requiredInfos) {
         return await Admin.create(requiredInfos)
-    }
+    },
 
-
+    async updateAdminById(id, update) {
+        
+        if (update.password) {
+            console.log(update.password)
+            update.password = await bcrypt.hash(update.password, 10);
+        }
+        
+        return await Admin.findOneAndUpdate(id, update, {
+            new: true
+        });
+    },
 }
