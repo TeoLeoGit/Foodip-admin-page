@@ -16,9 +16,16 @@
                             <td>{{this.userName}}</td>
                             <td>{{this.phoneNumber}}</td>
                             <td>
-                                <button onclick="location.href = 'userAccounts/detail?_id={{this._id}}';" class="btn btn-default btn-xs"><span class="bi bi-eye-fill"><a href="#"></a></span></button>
-                                {{!-- <button class="btn btn-default btn-xs"><span class="bi bi-unlock-fill"></span></button>
-                                <button class="btn btn-default btn-xs"><span class="bi bi-lock-fill"></span></button> --}}
+                              <button onclick="location.href = '/userAccounts/detail?_id={{this._id}}';" class="btn btn-default btn-xs"><span class="bi bi-eye-fill"><a href="#"></a></span></button>
+                              {{#if this.isBanned}}
+                                <form action="/userAccounts/unblock" method="post" style="display: inline-block;">   
+                                  <button type="submit" name="_id" value="{{this._id}}" class="btn btn-default btn-xs"><span class="bi bi-unlock-fill"></span></button>
+                                </form>
+                              {{else}}
+                                <form action="/userAccounts/block" method="post" style="display: inline-block;">   
+                                  <button type="submit" name="_id" value="{{this._id}}" class="btn btn-default btn-xs"><span class="bi bi-lock-fill"></span></button>
+                                </form>
+                              {{/if}}
                              </td>
                         </tr>
                         {{/each}}                                                                

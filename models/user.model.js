@@ -37,6 +37,22 @@ module.exports  = {
     },
 
     async loadPerPage(filter, options) {
-        return await User.paginate(filter, options)
+        options.lean = true //lean to convert to plain js object
+        console.log(options)
+        return await User.paginate(filter, options) 
+    },
+
+    async blockUserById(id) {
+        let update = { status: "Deactivate" };
+        return await User.findOneAndUpdate(id, update, {
+            new: true
+          });
+    },
+
+    async unblockUserById(id) {
+        let update = { status: "Active" };
+        return await User.findOneAndUpdate(id, update, {
+            new: true
+          });
     },
 }

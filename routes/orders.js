@@ -1,13 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const controller = require('../controllers/order.controller');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  if(req.isAuthenticated()) {
-    res.render('orders/orders', { title: 'Express' });
-  }
-  else   
-      res.redirect('/login')
-});
+router.get('/', controller.getOrders);
 
 module.exports = router;

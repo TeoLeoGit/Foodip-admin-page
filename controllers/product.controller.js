@@ -3,7 +3,7 @@ const driveAPI = require('../apis');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const { multipleMongooseToObject, mongooseToObject} = require('../utils/mongooseUtil');
-// const { firebasedatabase } = require('googleapis/build/src/apis/firebasedatabase');
+
 
 class ProductController {
 

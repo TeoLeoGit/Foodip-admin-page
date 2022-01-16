@@ -43,7 +43,13 @@ class UserController {
 
                     let prevAndNextInPages = { prev: currentPage - 1, next: pages[pages.length - 1].page + 1}
                     let prevAndNext = { prev: currentPage - 1, next: currentPage + 1}
-                                       
+                    
+                    result.docs.forEach(doc => { 
+                        doc["isBanned"] = false
+                        if (doc.status === 'Deactivate')
+                            doc.isBanned = true
+                        return doc })
+                    
                     res.render('userAccounts/userAccountsList', {
                         users: result.docs,
                         page: pages,
@@ -57,6 +63,34 @@ class UserController {
             }
             else   
                 res.redirect('/login')
+    }
+
+    blockUser(req, res, next) {
+        console.log(req.body)
+        if(req.isAuthenticated()) {
+            User.blockUserById(req.body)
+                .then(function (err) {
+                    if(!err) res.json()
+                    res.redirect('/userAccounts');
+                })
+                .catch(next);
+        }
+        else   
+            res.redirect('/login')
+    }
+
+    unblockUser(req, res, next) {
+        console.log(req.body)
+        if(req.isAuthenticated()) {
+            User.unblockUserById(req.body)
+                .then(function (err) {
+                    if(!err) res.json()
+                    res.redirect('/userAccounts');
+                })
+                .catch(next);
+        }
+        else   
+            res.redirect('/login')
     }
 
 }

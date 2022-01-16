@@ -18,9 +18,28 @@
                               {{#each admins}}
                               <tr>
                                   <td>{{this._id}}</td>
-                                  <td>{{this.firstname}} {{this.lastname}}</td>
-                                  <td>{{this.email}}</td>
-                                  <td>{{this.address}}</td>
+                                  <td>{{this.firstname}} {{this.lastname}}</td>                      
+                                  <td>
+                                    {{#if this.email}}
+                                        {{this.email}}
+                                    {{else}}
+                                        Not given yet.
+                                    {{/if}}
+                                  </td>
+                                  <td>
+                                    {{#if this.phone}}
+                                        {{this.phone}}
+                                    {{else}}
+                                        Not given yet.
+                                    {{/if}}
+                                  </td>
+                                  <td>
+                                     {{#if this.address}}
+                                        {{this.address}}
+                                    {{else}}
+                                        Not given yet.
+                                    {{/if}}
+                                  </td>
                               </tr>
                               {{/each}}
                                                                                           
