@@ -6,6 +6,7 @@ const multer  = require('multer');
 const upload = multer({ dest: path.join(path.dirname(__dirname), '/public/images') })
 const controller = require('../controllers/admin.controller');
 
+
 //admin profile
 router.get('/', function(req, res, next) {
   if(req.isAuthenticated()) {

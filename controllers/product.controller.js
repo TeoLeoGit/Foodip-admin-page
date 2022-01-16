@@ -6,13 +6,6 @@ const { multipleMongooseToObject, mongooseToObject} = require('../utils/mongoose
 // const { firebasedatabase } = require('googleapis/build/src/apis/firebasedatabase');
 
 class ProductController {
-    index(req, res, next) {
-        Product.loadAll()
-            .then(products => {
-                res.render('stocks/stocks', { products: multipleMongooseToObject(products)})
-            })
-            .catch(next);
-    }
 
     async addProduct(req, res, next) {
         // console.log(req.file)

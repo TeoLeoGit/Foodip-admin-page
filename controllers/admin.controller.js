@@ -59,6 +59,8 @@ class AdminController {
         else   
             res.redirect('/login')
     }
+
+    
 }
 
 module.exports = new AdminController();
