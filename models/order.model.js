@@ -57,6 +57,7 @@ module.exports  = {
     
     async getIncome() {
         return await Order.aggregate( [
+            {$match: {status: 2}},
             { $group: { _id: null, sumPrice: { $sum: "$totalPrice" } } }
          ] )
     },
@@ -64,87 +65,110 @@ module.exports  = {
     async getTopSaleProductAllTime() {
         return await Order.aggregate([
             {$unwind:"$products"},
+            {$match: {status: 2}},
             {
                 $group: {
-                  "_id": "$products.type",
+                  "_id": "$products.item",
                   "count":{$sum: "$products.qty"} 
                 }
             }
         ]).sort({_id: -1}).limit(10)
     },
 
-    async getTopSaleProductByYear(input) {
+    async getTopSaleProductByYear(year) {
         return await Order.aggregate([
             {$unwind:"$products"},
             {
                 $addFields: {
-                    yearFromDate: {$year: '$createAt'}
+                    yearFromDate: {$year: '$createdAt'}
                 },
             },
-            {$match: {yearFromDate: input}}, 
+            {$match: {$and: [{yearFromDate: year}, {status: 2}]}}, 
             {
                 $group: {
-                  "_id": "$products.type",
+                  "_id": "$products.item",
                   "count":{$sum: "$products.qty"} ,
                 }
             },
         ]).sort({_id: -1}).limit(10)
     },
 
-    async getTopSaleProductByMonth(input) {
+    async getTopSaleProductByMonth(month, year) {
         return await Order.aggregate([
             {$unwind:"$products"},
             {
                 $addFields: {
-                    monthFromDate: {$month: '$createAt'}
+                    monthFromDate: {$month: '$createdAt'},
+                    yearFromDate: {$year: '$createdAt'}
                 },
             },
-            {$match: {monthFromDate: input}}, 
+            {$match: {$and: [{monthFromDate: month}, {yearFromDate: year}, {status: 2}]}}, 
             {
                 $group: {
-                  "_id": "$products.type",
+                  "_id": "$products.item",
                   "count":{$sum: "$products.qty"} ,
                 }
             },
         ]).sort({_id: -1}).limit(10)
     },
 
-    async getTopSaleProductByWeek(input) {
+    async getTopSaleProductByDay(day, month, year) {
         return await Order.aggregate([
             {$unwind:"$products"},
             {
                 $addFields: {
-                    weekFromDate: {$week: '$createAt'}
+                    dayFromDate: {$dayOfMonth : '$createdAt'},
+                    monthFromDate: {$month: '$createdAt'},
+                    yearFromDate: {$year: '$createdAt'}
                 },
             },
-            {$match: {weekFromDate: input}}, 
+            {$match: {$and: [{dayFromDate: day}, {monthFromDate: month}, {yearFromDate: year}, {status: 2}]}}, 
             {
                 $group: {
-                  "_id": "$products.type",
+                  "_id": "$products.item",
                   "count":{$sum: "$products.qty"} ,
                 }
             },
         ]).sort({_id: -1}).limit(10)
     },
 
-    async getTopSaleProductByDay(day, month) {
-        return await Order.aggregate([
-            {$unwind:"$products"},
+    async getIncomeByDay(day, month, year) {
+        return await Order.aggregate( [
             {
                 $addFields: {
-                    dayFromDate: {$dayOfMonth : '$createAt'},
-                    monthFromDate: {$month: '$createAt'}
+                    dayFromDate: {$dayOfMonth : '$createdAt'},
+                    monthFromDate: {$month: '$createdAt'},
+                    yearFromDate: {$year: '$createdAt'}
                 },
             },
-            {$match: {$and: [{dayFromDate: day}, {monthFromDate: month}]}}, 
+            {$match: {$and: [{dayFromDate: day}, {monthFromDate: month}, {yearFromDate: year}, {status: 2}]}}, 
+            { $group: { _id: null, sumPrice: { $sum: "$totalPrice" } } }
+         ] )
+    },
 
+    async getIncomeByMonth(month, year) {
+        return await Order.aggregate( [
             {
-                $group: {
-                  "_id": "$products.type",
-                  "count":{$sum: "$products.qty"} ,
-                }
+                $addFields: {
+                    monthFromDate: {$month: '$createdAt'},
+                    yearFromDate: {$year: '$createdAt'}
+                },
             },
-        ]).sort({_id: -1}).limit(10)
+            {$match: {$and: [{monthFromDate: month}, {yearFromDate: year}, {status: 2}]}}, 
+            { $group: { _id: null, sumPrice: { $sum: "$totalPrice" } } }
+         ] )
+    },
+
+    async getIncomeByYear(year) {
+        return await Order.aggregate( [
+            {
+                $addFields: {
+                    yearFromDate: {$year: '$createdAt'}
+                },
+            },
+            {$match: {$and: [{yearFromDate: year}, {status: 2}]}},  
+            { $group: { _id: null, sumPrice: { $sum: "$totalPrice" } } }
+         ] )
     },
 
     async loadPerPage(filter, options) {

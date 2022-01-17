@@ -48,8 +48,6 @@ class AdminController {
                     }
                     req.login(admin, function(err) {
                         if (err) return next(err)
-
-                        console.log("After relogin: "+ req.session.passport.user)
                         //res.send(200)
                     })
                     res.redirect('/adminProfile');

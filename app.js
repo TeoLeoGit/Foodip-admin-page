@@ -1,8 +1,8 @@
 const createError = require('http-errors');
 const express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 require('dotenv').config()
 const passport = require('./auth/passport');
 const session = require('express-session');
@@ -14,16 +14,16 @@ const db = require('./database');
 db.connectMongoDB(process.env.DB_HOST);
 
 
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
 // const routes = require('./routes/index')(passport);
 const authRouter = require('./routes/auth');
-var usersRouter = require('./routes/users');
-var analyticsRouter = require('./routes/analytics');
-var ordersRouter = require('./routes/orders');
-var userAccountsRouter = require('./routes/userAccounts');
-var stocksRouter = require('./routes/stocks');
-var receivedOrdersRouter = require('./routes/receivedOrders');
-var adminProfileRouter = require('./routes/adminProfile');
+const usersRouter = require('./routes/users');
+const analyticsRouter = require('./routes/analytics');
+const ordersRouter = require('./routes/orders');
+const userAccountsRouter = require('./routes/userAccounts');
+const stocksRouter = require('./routes/stocks');
+const receivedOrdersRouter = require('./routes/receivedOrders');
+const adminProfileRouter = require('./routes/adminProfile');
 const adminsRouter = require('./routes/admins');
 
 const app = express();

@@ -3,12 +3,11 @@
 {{!-- <nav class="navbar navbar-light"> --}}
     <div class="container-sm" >
         <form class="d-flex" action="/analytics" method="get">
-            <select class="form-control me-2" name="Analytics option">
+            <select class="form-control me-2" name="AnalyticsOption">
                 <option>All</option>
-                <option>By day</option>
-                <option>By week</option>
-                <option>By month</option>
-                <option>By year</option>
+                <option>Today</option>
+                <option>This month</option>
+                <option>This year</option>
             </select>
             <button class="btn btn-outline-primary" type="submit">Analyze</button>
         </form>
@@ -99,7 +98,9 @@
             </div>
         </div>
     </div>
-    <input type = "hidden" id = "thingIWant" value = 'Capuchino, Big Mac, Pine Apple Pizza, Steak, Big Coke, Orange juice' />
+    <input type = "hidden" id = "products" value = '{{products}}' />
+    <input type = "hidden" id = "datas" value = '{{datas}}' />
+    <input type = "hidden" id = "incomes" value = '{{incomes}}' />
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
