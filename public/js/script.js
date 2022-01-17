@@ -7,17 +7,18 @@ $(document).ready(function () {
 
 });
 
-// datatables js
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
+// // datatables js
+// $(document).ready(function() {
+//     $('#example').DataTable();
+// } );
 
-// testing char
+//char js
 const ctx = document.getElementById('topSales').getContext('2d');
+const aList = document.getElementById("thingIWant").value.split(', ');
 const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Capuchino', 'Big Mac', 'Pine Apple Pizza', 'Steak', 'Big Coke', 'Orange juice'],
+        labels: aList,
         datasets: [{
             label: 'Number of orders',
             data: [200, 350, 500, 320, 400, 200],

@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var path = require('path');
+const express = require('express');
+const router = express.Router();
+const path = require('path');
 const multer  = require('multer');
 //upload image to public/images
 const upload = multer({ dest: path.join(path.dirname(__dirname), '/public/images') })

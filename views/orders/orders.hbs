@@ -1,167 +1,102 @@
-<!-- Summary cards -->
-            <div class="container">
-                <div class="row">
-                  <div class="col-md">
-                    <div class="card summary-card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title">10</h5>
-                                    <p class="card-text">Product</p>
-                                </div>
-                                <div class="col">
-                                    <h2><i class="bi bi-gift-fill"></i></h2>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="col-md">
-                    <div class="card summary-card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title">4925</h5>
-                                    <p class="card-text">Sales</p>
-                                </div>
-                                <div class="col">
-                                    <h2><i class="bi bi-currency-dollar"></i></h2>
-                                </div>
-                            </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md">
-                    <div class="card summary-card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title">6.250</h5>
-                                    <p class="card-text">Income</p>
-                                </div>
-                                <div class="col">
-                                    <h2><i class="bi bi-piggy-bank-fill"></i></h2>
-                                </div>
-                            </div>
-                            <!-- <h5 class="card-title">6.250</h5>
-                            <p class="card-text">Income</p> -->
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md">
-                    <div class="card summary-card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title">12%</h5>
-                                    <p class="card-text">Increase</p>
-                                </div>
-                                <div class="col">
-                                    <h2><i class="bi bi-graph-up-arrow"></i></h2>
-                                </div>
-                            </div>
-                          </div>
-                      </div>
-                  </div>
+
+<!-- Orders table -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Pending orders</h5>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr> 
+                                                <th>Customer</th>
+                                                <th>Address</th>
+                                                <th>Email</th>
+                                                <th>Time</th>           
+                                                <th>Action</th>                                      
+                                            </tr>
+                                        </thead>                   
+                                        <tbody>   
+                                            {{#each orders}}                                                                                                         
+                                            <tr data-toggle="collapse" data-target="#{{this._id}}" class="accordion-toggle">    
+                                                <td>{{this.name}}</td>
+                                                <td>{{this.address}}</td>
+                                                <td>{{this.email}}</td>
+                                                <td>{{this.createdAt}}</td>
+                                                <td>
+                                                    <form action="/orders/receive" method="post" style="display: inline-block;">
+                                                        <button type="submit" name="_id" value="{{this._id}}" class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>                           
+                                                    </form>
+                                                    <form action="/orders/decline" method="post" style="display: inline-block;">   
+                                                        <button type="submit" name="_id" value="{{this._id}}" class="btn btn-default btn-xs"><span class="bi bi-x-circle-fill"></span></button> 
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6" class="hiddenRow">
+                                                    <!-- collapse order data-->
+                                                    <div class="collapse" id="{{this._id}}">
+                    
+                                                        <div class="card card-body">
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Phone number:</div>
+                                                                <div class="col-sm-8">
+                                                                    {{this.phone}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Ordered items:</div>
+                                                                <div class="col-sm-8">
+                                                                    {{#each this.products}} 
+                                                                        {{this.item.name}}({{this.qty}}), 
+                                                                    {{/each}} 
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Total price:</div>
+                                                                <div class="col-sm-8">
+                                                                    {{this.totalPrice}}
+                                                                </div>
+                                                            </div>
+                                                            </div>                           
+                                                        </div>
+                                                    </div>
+                                                    <!--  -->
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>                            
+                            </div>      
                 </div>
-              </div>
-            <!-- Chars -->
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Top selling products</h5>
-                                <canvas id="topSales"></canvas>
-                            </div>
-                          </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Monthly income</h5>
-                                <canvas id="monthlyIncome"></canvas>
-                            </div>
-                          </div>
-                    </div>
-                </div>
-                
-            </div>
-            <!-- Orders table -->
-            
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Pending orders</h5>
-                                <table id="example" class="table table-striped" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Customer</th>
-                                            <th>Address</th>
-                                            <th>Time</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Lai Van Hau</td>
-                                            <td>17 Hai Ba Trung, District 1</td>
-                                            <th>8:15</th>
-                                            <td>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-eye-fill"></span></button>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>    
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-x-circle-fill"></span></button> 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tran Van Thien</td>
-                                            <td>70 Nguyen Van Cu, District 5</td>
-                                            <th>8:15</th>
-                                            <td>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-eye-fill"></span></button>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>    
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-x-circle-fill"></span></button> 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Le Huu Toan</td>
-                                            <td>90 Tran Phu, District 7</td>
-                                            <th>8:15</th>
-                                            <td>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-eye-fill"></span></button>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>    
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-x-circle-fill"></span></button> 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Le Minh Khoi</td>
-                                            <td>50 Tran Phu, District 7</td>
-                                            <th>8:15</th>
-                                            <td>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-eye-fill"></span></button>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>    
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-x-circle-fill"></span></button> 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Le Van Dat</td>
-                                            <td>60 Le Loi, District 8</td>
-                                            <th>8:15</th>
-                                            <td>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-eye-fill"></span></button>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>    
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-x-circle-fill"></span></button> 
-                                            </td>
-                                        </tr>                                                               
-                                    </tbody>
-                                </table>
-                            </div>
-                          </div>
-                        
-                    </div> 
-                    </div>
-                </div>
-            <!--  -->
-            <!-- End of page content -->
+            </div>  
+    </div>
+    </div>
+              <!-- Pagination -->
+                    <ul class="pagination">
+                      {{#if hasPrev}}
+                          <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{prevAndNext.prev}}">Previous</a></li>
+                      {{else}}
+                          <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                      {{/if}}
+                      {{#if hasPrev}}
+                        <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{prevAndNextInPages.prev}}">...</a></li>
+                      {{/if}}
+                      {{#each page}}
+                        <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{this.page}}">{{this.page}}</a></li>
+                      {{/each}}
+                      {{#if hasNext}}
+                        <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{prevAndNextInPages.next}}">...</a></li>
+                      {{/if}}
+                      {{#if hasNext}}
+                        <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{prevAndNext.prev}}">Next</a></li>
+                      {{else}}
+                        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                      {{/if}}                    
+                    </ul>
+</div>
+<!--  -->
+<!-- End of page content -->

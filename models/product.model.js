@@ -78,4 +78,8 @@ module.exports  = {
     async loadPerPage(filter, options) {
         return await Product.paginate(filter, options)
     },
+
+    async getNumberOfProduct() {
+        return await Product.countDocuments({ activeFlag: 1 })
+    }
 }

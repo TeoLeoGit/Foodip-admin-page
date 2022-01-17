@@ -1,13 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  if(req.isAuthenticated()) {
-    res.render('analytics/analytics', { title: 'Express' });
-  }
-  else   
-      res.redirect('/login')
-});
+const controller = require('../controllers/analytic.controller');
+
+router.get('/', controller.getAnalytics);
 
 module.exports = router;

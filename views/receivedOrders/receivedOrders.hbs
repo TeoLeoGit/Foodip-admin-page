@@ -1,36 +1,71 @@
-<!-- Page Content -->
-            <div class="container">
-                <table id="example" class="table table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Account ID</th>
-                            <th>Customer</th>
-                            <th>Address</th>
-                            <th>Phone</th>
-                            <th>Datetime</th>
-                            <th>Order details</th>
-                            <th>Total price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each orders}}
-                        <tr>
-                            <td>{{this.userId}}</td>
-                            <td>{{this.name}}</td>
-                            <td>{{this.address}}</td>
-                            <td>{{this.phone}}</td>
-                            <td>{{this.createAt}}</td>
-                            <td>{{this.products}}</td>
-                            <td>{{this.totalPrice}}</td>
-                            <td>
-                                <button class="btn btn-default btn-xs"><span class="bi bi-eye-fill"></span></button>
-                            </td>
-                        </tr>
-                        {{/each}}                                                            
-                    </tbody>
-                </table>
-
-                <!-- Pagination -->
+<!-- Orders table -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Pending orders</h5>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr> 
+                                                <th>Customer</th>
+                                                <th>Address</th>
+                                                <th>Email</th>
+                                                <th>Time</th>                                           
+                                            </tr>
+                                        </thead>                   
+                                        <tbody>   
+                                            {{#each orders}}                                                                                                         
+                                            <tr data-toggle="collapse" data-target="#{{this._id}}" class="accordion-toggle">    
+                                                <td>{{this.name}}</td>
+                                                <td>{{this.address}}</td>
+                                                <td>{{this.email}}</td>
+                                                <td>{{this.createdAt}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6" class="hiddenRow">
+                                                    <!-- collapse order data-->
+                                                    <div class="collapse" id="{{this._id}}">
+                    
+                                                        <div class="card card-body">
+                                                             <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Phone number:</div>
+                                                                <div class="col-sm-8">
+                                                                    {{this.phone}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Ordered items:</div>
+                                                                <div class="col-sm-8">
+                                                                    {{#each this.products}} 
+                                                                        {{this.item.name}}({{this.qty}}), 
+                                                                    {{/each}} 
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Total price:</div>
+                                                                <div class="col-sm-8">
+                                                                    {{this.totalPrice}}
+                                                                </div>
+                                                            </div>
+                                                            </div>                           
+                                                        </div>
+                                                    </div>
+                                                    <!--  -->
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>                            
+                            </div>      
+                </div>
+            </div>  
+    </div>
+    </div>
+              <!-- Pagination -->
                     <ul class="pagination">
                       {{#if hasPrev}}
                           <li class="page-item"><a class="page-link" href="/receivedOrders{{subRoute}}/{{prevAndNext.prev}}">Previous</a></li>
@@ -52,5 +87,6 @@
                         <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
                       {{/if}}                    
                     </ul>
-            </div>  
-            <!-- End of page content -->
+</div>
+<!--  -->
+<!-- End of page content -->

@@ -55,4 +55,9 @@ module.exports  = {
             new: true
           });
     },
+
+    async getUserById(id) {
+        return await User.findOne(id).exec();
+    },
+
 }

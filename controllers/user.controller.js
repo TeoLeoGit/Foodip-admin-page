@@ -1,14 +1,25 @@
 const User = require('../models/user.model')
+const Order = require('../models/order.model');
 const mongoose = require('mongoose');
 const { multipleMongooseToObject, mongooseToObject} = require('../utils/mongooseUtil');
-class UserController {
 
-    getUserDetail(req, res, next) {
+class UserController {
+    async getUserDetail(req, res, next) {
         // console.log(req.query)
         if(req.isAuthenticated()) {
-            User.getUserById(req.query)
+            await User.getUserById(req.query)
                 .then(customer => {
-                    res.render('userAccounts/userDetail', mongooseToObject(customer))
+                    let orders = undefined
+                    Order.getMostRecentOrderOfUser({userId: customer._id})
+                        .then(results => {
+                            orders = results
+                            console.log(orders)
+                            res.render('userAccounts/userDetail', {
+                                customer: mongooseToObject(customer),
+                                orders: orders
+                            })
+                        })
+                        .catch(next);
                 })
                 .catch(next);
         }

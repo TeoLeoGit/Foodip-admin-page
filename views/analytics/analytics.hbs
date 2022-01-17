@@ -1,167 +1,107 @@
 <!-- Summary cards -->
-            <div class="container">
-                <div class="row">
-                  <div class="col-md">
-                    <div class="card summary-card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title">10</h5>
-                                    <p class="card-text">Product</p>
-                                </div>
-                                <div class="col">
-                                    <h2><i class="bi bi-gift-fill"></i></h2>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="col-md">
-                    <div class="card summary-card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title">4925</h5>
-                                    <p class="card-text">Sales</p>
-                                </div>
-                                <div class="col">
-                                    <h2><i class="bi bi-currency-dollar"></i></h2>
-                                </div>
-                            </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md">
-                    <div class="card summary-card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title">6.250</h5>
-                                    <p class="card-text">Income</p>
-                                </div>
-                                <div class="col">
-                                    <h2><i class="bi bi-piggy-bank-fill"></i></h2>
-                                </div>
-                            </div>
-                            <!-- <h5 class="card-title">6.250</h5>
-                            <p class="card-text">Income</p> -->
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md">
-                    <div class="card summary-card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title">12%</h5>
-                                    <p class="card-text">Increase</p>
-                                </div>
-                                <div class="col">
-                                    <h2><i class="bi bi-graph-up-arrow"></i></h2>
-                                </div>
-                            </div>
-                          </div>
-                      </div>
-                  </div>
-                </div>
-              </div>
-            <!-- Chars -->
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Top selling products</h5>
-                                <canvas id="topSales"></canvas>
-                            </div>
-                          </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Monthly income</h5>
-                                <canvas id="monthlyIncome"></canvas>
-                            </div>
-                          </div>
-                    </div>
-                </div>
-                
-            </div>
-            <!-- Orders table -->
-            
-            <div class="container">
+ <!-- Search bar -->
+{{!-- <nav class="navbar navbar-light"> --}}
+    <div class="container-sm" >
+        <form class="d-flex" action="/analytics" method="get">
+            <select class="form-control me-2" name="Analytics option">
+                <option>All</option>
+                <option>By day</option>
+                <option>By week</option>
+                <option>By month</option>
+                <option>By year</option>
+            </select>
+            <button class="btn btn-outline-primary" type="submit">Analyze</button>
+        </form>
+    </div>
+{{!-- </nav> --}}
+
+<div class="container">
+    <div class="row">
+    <div class="col-md">
+        <div class="card summary-card">
+            <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Pending orders</h5>
-                                <table id="example" class="table table-striped" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Customer</th>
-                                            <th>Address</th>
-                                            <th>Time</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Lai Van Hau</td>
-                                            <td>17 Hai Ba Trung, District 1</td>
-                                            <th>8:15</th>
-                                            <td>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-eye-fill"></span></button>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>    
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-x-circle-fill"></span></button> 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tran Van Thien</td>
-                                            <td>70 Nguyen Van Cu, District 5</td>
-                                            <th>8:15</th>
-                                            <td>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-eye-fill"></span></button>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>    
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-x-circle-fill"></span></button> 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Le Huu Toan</td>
-                                            <td>90 Tran Phu, District 7</td>
-                                            <th>8:15</th>
-                                            <td>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-eye-fill"></span></button>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>    
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-x-circle-fill"></span></button> 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Le Minh Khoi</td>
-                                            <td>50 Tran Phu, District 7</td>
-                                            <th>8:15</th>
-                                            <td>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-eye-fill"></span></button>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>    
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-x-circle-fill"></span></button> 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Le Van Dat</td>
-                                            <td>60 Le Loi, District 8</td>
-                                            <th>8:15</th>
-                                            <td>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-eye-fill"></span></button>
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>    
-                                                <button class="btn btn-default btn-xs"><span class="bi bi-x-circle-fill"></span></button> 
-                                            </td>
-                                        </tr>                                                               
-                                    </tbody>
-                                </table>
-                            </div>
-                          </div>
-                        
-                    </div> 
+                        <h5 class="card-title">{{numberOfProduct}}</h5>
+                        <p class="card-text">Products</p>
+                    </div>
+                    <div class="col">
+                        <h2><i class="bi bi-gift-fill"></i></h2>
                     </div>
                 </div>
-            <!--  -->
-            <!-- End of page content -->
+            </div>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="card summary-card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title">{{saleAmount}}</h5>
+                        <p class="card-text">Sales</p>
+                    </div>
+                    <div class="col">
+                        <h2><i class="bi bi-currency-dollar"></i></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="card summary-card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title">{{income}}</h5>
+                        <p class="card-text">Income</p>
+                    </div>
+                    <div class="col">
+                        <h2><i class="bi bi-piggy-bank-fill"></i></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="card summary-card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title">12%</h5>
+                        <p class="card-text">Increase</p>
+                    </div>
+                    <div class="col">
+                        <h2><i class="bi bi-graph-up-arrow"></i></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<!-- Chars -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Top selling products</h5>
+                    <canvas id="topSales"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Monthly income</h5>
+                    <canvas id="monthlyIncome"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type = "hidden" id = "thingIWant" value = 'Capuchino, Big Mac, Pine Apple Pizza, Steak, Big Coke, Orange juice' />
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- End of page content -->

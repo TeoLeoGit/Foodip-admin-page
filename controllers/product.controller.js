@@ -63,7 +63,6 @@ class ProductController {
 
     async updateProduct(req, res, next) {
         if(req.isAuthenticated()) {
-            //console.log(req.body)
             let update = {}
             if(req.file) {
                 const filePath = req.file.path
@@ -75,8 +74,9 @@ class ProductController {
             if(req.body.category) update["category"] = req.body.category
             if(req.body.discount) update["discount"] = parseFloat(req.body.discount)
             if(req.body.status)
-                if(req.body.status[1] === 'Available') update["status"] = 1
+                if(req.body.status === 'Available') update["status"] = 1
                 else update["status"] = 0
+            if(req.body.description) update["description"] = req.body.description
     
             await Product.updateProductById({_id: req.body._id}, update)
                 .then(product => {

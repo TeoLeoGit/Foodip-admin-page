@@ -47,7 +47,14 @@
                                     </div>
                                 </div>
                             </li>
-                            
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="description" class="col">Description</div>
+                                    <div  class="col" style="text-align: left;">
+                                        {{this.description}}
+                                    </div>
+                                </div>
+                            </li>
                             
                         </ul>
                       </div>
@@ -82,17 +89,14 @@
                                     <label for="productStatus">Status</label>
                                     <!-- <input type="text" class="form-control" id="productStatus" placeholder="Password"> -->
                                     <select class="form-control" id="productStatus" name="status">
-                                      <option>Available</option>
+                                      <option selected>Available</option>
                                       <option>Out of stocks</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label for="productStatus">Status</label>
-                                    <!-- <input type="text" class="form-control" id="productStatus" placeholder="Password"> -->
-                                    <select class="form-control" id="productStatus" name="status">
-                                      <option selected>Available</option>
-                                      <option>Out of stocks</option>
-                                    </select>
+                                    <label for="productDescription">Description</label>
+
+                                    <input type="text" class="form-control" id="productDescription" name="description" placeholder="{{this.description}}">
                                 </div>
                                  
                                 </div>                                                       
